@@ -1,5 +1,5 @@
 import blackjack_demo
-from blackjack_demo.models import Card, CardSuit, CardValue, Deck, Player
+from blackjack_demo.models import Card, CardSuit, CardValue, Deck, Game, Player
 import pytest
 from random import choice
 
