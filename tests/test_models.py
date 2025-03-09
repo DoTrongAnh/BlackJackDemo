@@ -35,14 +35,16 @@ def test_deck_empty():
 
 @pytest.mark.parametrize(
     'win_score,hand,is_bust,is_blackjack',
-    (21, [CardValue.ACE, CardValue.TEN], False, True),
-    (21, [CardValue.TEN, CardValue.ACE], False, True),
-    (21, [CardValue.ACE, CardValue.JACK], False, True),
-    (21, [CardValue.JACK, CardValue.ACE], False, True),
-    (21, [CardValue.ACE, CardValue.QUEEN], False, True),
-    (21, [CardValue.QUEEN, CardValue.ACE], False, True),
-    (21, [CardValue.ACE, CardValue.KING], False, True),
-    (21, [CardValue.KING, CardValue.ACE], False, True),
+    [
+        (21, [CardValue.ACE, CardValue.TEN], False, True),
+        (21, [CardValue.TEN, CardValue.ACE], False, True),
+        (21, [CardValue.ACE, CardValue.JACK], False, True),
+        (21, [CardValue.JACK, CardValue.ACE], False, True),
+        (21, [CardValue.ACE, CardValue.QUEEN], False, True),
+        (21, [CardValue.QUEEN, CardValue.ACE], False, True),
+        (21, [CardValue.ACE, CardValue.KING], False, True),
+        (21, [CardValue.KING, CardValue.ACE], False, True),
+    ]
 )
 def test_player_score(mocker, win_score, hand, is_bust, is_blackjack):
     new_player = Player()
