@@ -96,36 +96,40 @@ class Deck:
 
 class Game:
   players: List[Player] = []
-  outcome: List[str] = []
 
   def __init__(self, num_of_players):
     self.dealer = Player()
     self.deck = Deck()
+    self.outcome = {}
+    self.ended = False
     self.players = [Player() for _ in range(num_of_players)]
     while len(self.dealer.hand) < INITIAL_HAND_SIZE or self.dealer.score < MIN_DEALER_SCORE:
       self.dealer.add_card(self.deck.cards.pop())
-
-    if self.dealer.is_blackjack():
-      self.outcome = ['lose' for _ in self.players]
-      print(f'Dealer scores {self.dealer.score}. Dealer hits Blackjack!')
-      return
-
-    if self.dealer.is_bust():
-      self.outcome = ['win' for _ in self.players]
-      print(f'Dealer scores {self.dealer.score}. Dealer is bust!')
-      return
 
     for _ in range(INITIAL_HAND_SIZE):
       [p.add_card(self.deck.cards.pop()) for p in self.players if not self.deck.is_empty()]
 
   def announce_outcome(self) -> str:
-    return '\n'.join([f'Player {p}: {o}' for p, o in enumerate(self.outcome)])
+    return '\n'.join([f'Player {p}: {o}' for p, o in self.outcome.items()])
 
   def is_ended(self) -> bool:
-    return len(self.outcome) == len(self.players)
+    return self.ended
 
-  def calculate_outcome(self):
+  def update_outcome(self) -> None:
+    # Check if the game can end from the dealer's hand
+    if self.dealer.is_blackjack():
+      self.outcome = {i: 'lose' for i, _ in enumerate(self.players)}
+      print(f'Dealer scores {self.dealer.score}. Dealer hits Blackjack!')
+      self.ended = True
+      return
+
+    if self.dealer.is_bust():
+      self.outcome = {i: 'win' for i, _ in enumerate(self.players)}
+      print(f'Dealer scores {self.dealer.score}. Dealer is bust!')
+      self.ended = True
+      return
+
     # Only calculate this if the dealer is neither bust nor blackjack
-    self.outcome = []
-    for p in self.players:
-      self.outcome.append('win' if p.is_blackjack() or p.score > self.dealer.score else ('lose' if p.is_bust() or p.score < self.dealer.score else 'draw'))
+    self.outcome = {}
+    for i, p in enumerate(self.players):
+      self.outcome[i] = 'win' if p.is_blackjack() or p.score > self.dealer.score else ('lose' if p.is_bust() or p.score < self.dealer.score else 'draw')
