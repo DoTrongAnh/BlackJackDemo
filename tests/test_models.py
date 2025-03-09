@@ -36,7 +36,7 @@ def test_deck_empty():
 @pytest.mark.parametrize(
     'win_score,hand,is_bust,is_blackjack',
     [
-        (21, [CardValue.ACE, CardValue.TEN], False, True),
+        (21, [CardValue.ACE, CardValue.TEN], False, True),  # Classic blackjack
         (21, [CardValue.TEN, CardValue.ACE], False, True),
         (21, [CardValue.ACE, CardValue.JACK], False, True),
         (21, [CardValue.JACK, CardValue.ACE], False, True),
@@ -44,6 +44,10 @@ def test_deck_empty():
         (21, [CardValue.QUEEN, CardValue.ACE], False, True),
         (21, [CardValue.ACE, CardValue.KING], False, True),
         (21, [CardValue.KING, CardValue.ACE], False, True),
+        (21, [CardValue.ACE, CardValue.ACE], False, False),
+        (22, [CardValue.ACE, CardValue.ACE], False, True),  # Blackjack with two aces
+        (20, [CardValue.ACE, CardValue.TEN], True, False),  # Bust with one ace
+        (20, [CardValue.ACE, CardValue.NINE], False, True),  # Modified blackjack
     ]
 )
 def test_player_score(mocker, win_score, hand, is_bust, is_blackjack):
@@ -53,3 +57,19 @@ def test_player_score(mocker, win_score, hand, is_bust, is_blackjack):
         new_player.add_card(Card(card_value, choice([s for s in CardSuit])))
     assert new_player.is_bust() == is_bust, f'Player busting should be {is_bust}'
     assert new_player.is_blackjack() == is_blackjack, f'Player blackjack should be {is_blackjack}'
+
+
+@pytest.mark.parametrize(
+    'min_dealer_score,min_hand_size,min_dealer_hand',
+    [
+        (17, 1, 2),  # At least 2 cards to reach score 17
+        (1, 2, 2),
+        (1, 5, 5),
+        (23, 1, 3),  # At least 3 cards to reach score 23
+    ]
+)
+def test_game_dealer_hand(mocker, min_dealer_score, min_hand_size, min_dealer_hand):
+    mocker.patch('blackjack_demo.models.MIN_DEALER_SCORE', new=min_dealer_score)
+    mocker.patch('blackjack_demo.models.INITAL_HAND_SIZE', new=min_hand_size)
+    new_game = Game(1)
+    assert len(new_game.dealer.hand) >= min_dealer_hand, f'Dealer should have at least {min_dealer_hand}, not {len(new_game.dealer.hand)}'

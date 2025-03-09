@@ -5,6 +5,7 @@ from typing import List
 
 BLACKJACK_WIN = 21
 INITAL_HAND_SIZE = 2
+MIN_DEALER_SCORE = 17
 
 
 class CardSuit(Enum):
@@ -94,22 +95,22 @@ class Deck:
 
 
 class Game:
-  dealer = Player()
   players: List[Player] = []
   outcome: List[str] = []
-  deck = Deck()
 
   def __init__(self, num_of_players):
+    self.dealer = Player()
+    self.deck = Deck()
     self.players = [Player() for _ in range(num_of_players)]
-    for _ in range(INITIAL_HAND_SIZE):
-      dealer.add_card(self.deck.cards.pop())
+    while len(self.dealer.hand) < INITIAL_HAND_SIZE or self.dealer.score < MIN_DEALER_SCORE:
+      self.dealer.add_card(self.deck.cards.pop())
 
-    if dealer.is_blackjack():
+    if self.dealer.is_blackjack():
       self.outcome = ['lose' for _ in self.players]
       print(f'Dealer scores {self.dealer.score}. Dealer hits Blackjack!')
       return
 
-    if dealer.is_bust():
+    if self.dealer.is_bust():
       self.outcome = ['win' for _ in self.players]
       print(f'Dealer scores {self.dealer.score}. Dealer is bust!')
       return
