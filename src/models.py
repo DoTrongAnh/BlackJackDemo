@@ -4,6 +4,7 @@ from typing import List
 
 
 BLACKJACK_WIN = 21
+INITAL_HAND_SIZE = 2
 
 
 class CardSuit(Enum):
@@ -34,9 +35,13 @@ class Card:
   value: CardValue
   suit: CardSuite
 
+  def __str__(self):
+    return f'{self.value.name} of {self.suit.name}'
+
 
 class Player:
   hand: List[Card] = []
+  _score: int = 0
 
   @property
   def score(self) -> int:
@@ -54,6 +59,12 @@ class Player:
   def add_card(self, card: Card) -> None:
     self.hand.append(card)
     self._calculate_score()
+
+  def is_bust(self) -> bool:
+    return self._score > BLACKJACK_WIN
+
+  def is_blackjack(self) -> bool:
+    return self._score == BLACKJACK_WIN
 
 
 class Deck:
@@ -73,3 +84,43 @@ class Deck:
         self.cards.append(halves[picked_half].pop())
         picked_half = (picked_half + 1) % 2
       self.cards += halves[0] + halves[1]
+
+  def is_empty(self):
+    return len(self.cards) == 0
+
+
+class Game:
+  dealer = Player()
+  players: List[Player] = []
+  outcome: List[str] = []
+  deck = Deck()
+
+  def __init__(self, num_of_players):
+    self.players = [Player() for _ in range(num_of_players)]
+    for _ in range(INITIAL_HAND_SIZE):
+      dealer.add_card(self.deck.cards.pop())
+
+    if dealer.is_blackjack():
+      self.outcome = ['lose' for _ in self.players]
+      print(f'Dealer scores {self.dealer.score}. Dealer hits Blackjack!')
+      return
+
+    if dealer.is_bust():
+      self.outcome = ['win' for _ in self.players]
+      print(f'Dealer scores {self.dealer.score}. Dealer is bust!')
+      return
+
+    for _ in range(INITIAL_HAND_SIZE):
+      [p.add_card(self.deck.cards.pop()) for p in self.players if not self.deck.is_empty()]
+
+  def announce_outcome(self) -> str:
+    return '\n'.join([f'Player {p}: {o}' for p, o in enumerate(self.outcome)])
+
+  def is_ended(self) -> bool:
+    return len(self.outcome) == len(self.players)
+
+  def calculate_outcome(self):
+    # Only calculate this if the dealer is neither bust nor blackjack
+    self.outcome = []
+    for p in self.players:
+      self.outcome.append('win' if p.is_blackjack() or p.score > self.dealer.score else ('lose' if p.is_bust() or p.score < self.dealer.score else 'draw'))
