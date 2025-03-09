@@ -73,3 +73,18 @@ def test_game_dealer_hand(mocker, min_dealer_score, min_hand_size, min_dealer_ha
     mocker.patch('blackjack_demo.models.INITIAL_HAND_SIZE', new=min_hand_size)
     new_game = Game(1)
     assert len(new_game.dealer.hand) >= min_dealer_hand, f'Dealer should have at least {min_dealer_hand}, not {len(new_game.dealer.hand)}'
+
+
+@pytest.mark.parametrize(
+    'min_dealer_score,win_score',
+    [(20, 19), (21, 20), (22, 21)]
+)
+def test_game_dealer_bust(mocker, min_dealer_score, win_score):
+    mocker.patch('blackjack_demo.models.BLACKJACK_WIN', new=win_score)
+    mocker.patch('blackjack_demo.models.MIN_DEALER_SCORE', new=min_dealer_score)
+    num_players = 3
+    new_game = Game(num_players)
+    assert new_game.dealer.is_bust(), 'Dealer should be bust'
+    new_game.update_outcome()
+    assert new_game.outcome == {i: 'win' for i in range(num_players)}
+    assert new_game.is_ended(), 'Game should have ended'
