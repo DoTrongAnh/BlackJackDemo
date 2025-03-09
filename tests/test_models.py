@@ -95,7 +95,7 @@ def test_game_dealer_blackjack(mocker, win_score):
     mocker.patch('blackjack_demo.models.BLACKJACK_WIN', new=win_score)
     num_players = 3
     new_game = Game(num_players)
-    mocker.patch.object(Player, 'score', return_value=win_score)
+    mocker.patch('blackjack_demo.models.Player.is_blackjack', return_value=True)
     assert new_game.dealer.is_blackjack(), 'Dealer should be blackjack'
     new_game.update_outcome()
     assert new_game.outcome == {i: 'lose' for i in range(num_players)}
