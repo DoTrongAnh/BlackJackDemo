@@ -1,4 +1,4 @@
-from model import Card, CardSuit, CardValue
+from blackjack_demo.models import Card, CardSuit, CardValue
 import pytest
 
 
