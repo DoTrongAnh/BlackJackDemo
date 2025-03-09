@@ -1,4 +1,4 @@
-from blackjack_demo import models
+import blackjack_demo
 from blackjack_demo.models import Card, CardSuit, CardValue, Deck, Player
 import pytest
 from random import choice
@@ -48,7 +48,7 @@ def test_deck_empty():
 )
 def test_player_score(mocker, win_score, hand, is_bust, is_blackjack):
     new_player = Player()
-    mocker.patch('models.BLACKJACK_WIN', return_value=win_score)
+    mocker.patch('blackjack_demo.models.BLACKJACK_WIN', return_value=win_score)
     for card_value in hand:
         new_player.add_card(Card(card_value, choice([s for s in CardSuit])))
     assert new_player.is_bust() == is_bust, f'Player busting should be {is_bust}'
