@@ -30,7 +30,7 @@ class CardValue(Enum):
   KING = 13
 
 
-@dataclass
+@dataclass(eq=True, frozen=True)
 class Card:
   value: CardValue
   suit: CardSuit
