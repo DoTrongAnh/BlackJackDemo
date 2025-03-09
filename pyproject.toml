@@ -33,5 +33,5 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
-version = {attr = "blackjack-demo.__version__"}
+version = {attr = "blackjack_demo.__version__"}
 readme = {file = ["README.md"], content-type = "text/markdown"}
