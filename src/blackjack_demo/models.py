@@ -4,7 +4,7 @@ from typing import List
 
 
 BLACKJACK_WIN = 21
-INITAL_HAND_SIZE = 2
+INITIAL_HAND_SIZE = 2
 MIN_DEALER_SCORE = 17
 
 

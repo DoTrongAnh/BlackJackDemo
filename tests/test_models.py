@@ -70,6 +70,6 @@ def test_player_score(mocker, win_score, hand, is_bust, is_blackjack):
 )
 def test_game_dealer_hand(mocker, min_dealer_score, min_hand_size, min_dealer_hand):
     mocker.patch('blackjack_demo.models.MIN_DEALER_SCORE', new=min_dealer_score)
-    mocker.patch('blackjack_demo.models.INITAL_HAND_SIZE', new=min_hand_size)
+    mocker.patch('blackjack_demo.models.INITIAL_HAND_SIZE', new=min_hand_size)
     new_game = Game(1)
     assert len(new_game.dealer.hand) >= min_dealer_hand, f'Dealer should have at least {min_dealer_hand}, not {len(new_game.dealer.hand)}'
