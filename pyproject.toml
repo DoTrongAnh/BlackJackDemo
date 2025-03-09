@@ -3,7 +3,7 @@ name = "blackjack-demo"
 description = "Simply BlackJack game"
 license = { text = "MIT" }
 requires-python = ">=3.11"
-authors = [{ name = "your name", email = "anh.trong.do.1994@gmail.com" }]
+authors = [{ name = "Do Trong Anh", email = "anh.trong.do.1994@gmail.com" }]
 keywords = ["blackjack", "demo", "practice"]
 classifiers = [
     "Development Status :: 1 - Beta",
@@ -22,7 +22,8 @@ dynamic = ["readme", "version"]
 
 [project.optional-dependencies]
 tests = [
-    "pytest==8.3.5"
+    "pytest==8.3.5",
+    "pytest-mock==3.14.0"
 ]
 coverage = [
     "coverage==7.6.12"
