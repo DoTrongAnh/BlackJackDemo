@@ -43,6 +43,10 @@ class Player:
   hand: List[Card] = []
   _score: int = 0
 
+  def __init__(self):
+    self.hand = []
+    self._score = 0
+
   @property
   def score(self) -> int:
     return self._score
