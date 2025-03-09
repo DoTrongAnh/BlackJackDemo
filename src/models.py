@@ -33,7 +33,7 @@ class CardValue(Enum):
 @dataclass
 class Card:
   value: CardValue
-  suit: CardSuite
+  suit: CardSuit
 
   def __str__(self):
     return f'{self.value.name} of {self.suit.name}'
