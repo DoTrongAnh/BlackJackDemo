@@ -69,7 +69,7 @@ class Player:
     return self._score > BLACKJACK_WIN
 
   def is_blackjack(self) -> bool:
-    return self._score == BLACKJACK_WIN
+    return self.score == BLACKJACK_WIN
 
 
 class Deck:
