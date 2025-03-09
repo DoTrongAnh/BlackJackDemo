@@ -1,6 +1,7 @@
 # BlackJackDemo
 
 ![Unittests status badge](https://github.com/DoTrongAnh/BlackJackDemo/workflows/Unittests/badge.svg)
+![Coverage status badge](https://github.com/DoTrongAnh/BlackJackDemo/workflows/Coverage/badge.svg)
 
 A simple project for coding practice
 
