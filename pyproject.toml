@@ -1,7 +1,7 @@
 [project]
 name = "blackjack-demo"
 description = "Simply BlackJack game"
-license = { }
+license = { text = "MIT" }
 requires-python = ">=3.11"
 authors = [{ name = "your name", email = "anh.trong.do.1994@gmail.com" }]
 keywords = ["blackjack", "demo", "practice"]
@@ -9,6 +9,7 @@ classifiers = [
     "Development Status :: 1 - Beta",
     "Environment :: Console",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
