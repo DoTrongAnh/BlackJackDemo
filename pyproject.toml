@@ -27,3 +27,11 @@ tests = [
 coverage = [
     "coverage==7.6.12"
 ]
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "blackjack-demo.__version__"}
+readme = {file = ["README.md"], content-type = "text/markdown"}
