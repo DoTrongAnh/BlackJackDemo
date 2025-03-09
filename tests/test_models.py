@@ -1,4 +1,4 @@
-from blackjack_demo.models import Card, CardSuit, CardValue, Player
+from blackjack_demo.models import Card, CardSuit, CardValue, Deck, Player
 import pytest
 from random import choice
 
@@ -16,4 +16,11 @@ def test_player_hand_size(hand_size):
     new_player = Player()
     for _ in range(hand_size):
         new_player.add_card(Card(choice([v for v in CardValue]), choice([s for s in CardSuit])))
-    assert len(new_player.hand) == hand_size, 'Player should have {hand_size} cards, not {len(new_player.hand)}'
+    assert len(new_player.hand) == hand_size, f'Player should have {hand_size} cards, not {len(new_player.hand)}'
+
+
+def test_deck_inventory():
+    new_deck = Deck()
+    expected_deck_size = len([v for v in CardValue]) * len([s for s in CardSuit])
+    actual_deck = set(new_deck.cards)
+    assert len(actual_deck) == expected_deck_size, f'Deck should have {expected_deck_size} unique cards, not {len(actual_deck)}'
