@@ -1,4 +1,7 @@
 # BlackJackDemo
+
+![Unittests status badge](https://github.com/DoTrongAnh/BlackJackDemo/workflows/Unittests/badge.svg)
+
 A simple project for coding practice
 
 ## Sketching ideas
