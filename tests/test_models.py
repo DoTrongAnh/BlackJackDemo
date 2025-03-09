@@ -88,3 +88,15 @@ def test_game_dealer_bust(mocker, min_dealer_score, win_score):
     new_game.update_outcome()
     assert new_game.outcome == {i: 'win' for i in range(num_players)}
     assert new_game.is_ended(), 'Game should have ended'
+
+
+@pytest.mark.parametrize('win_score', [21, 22, 25, 30, 41])
+def test_game_dealer_blackjack(mocker, win_score):
+    mocker.patch('blackjack_demo.models.BLACKJACK_WIN', new=win_score)
+    num_players = 3
+    new_game = Game(num_players)
+    mocker.patch('blackjack_demo.models.Game.dealer._score', new=win_score)
+    assert new_game.dealer.is_blackjack(), 'Dealer should be blackjack'
+    new_game.update_outcome()
+    assert new_game.outcome == {i: 'lose' for i in range(num_players)}
+    assert new_game.is_ended(), 'Game should have ended'
